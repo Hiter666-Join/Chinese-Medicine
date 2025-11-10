@@ -1,0 +1,68 @@
+
+
+.pageWrapper {
+  background: linear-gradient(135deg, #F4EFEB 0%, #EAD2BE 50%, #F4EFEB 100%);
+  min-height: 100vh;
+}
+
+.glassEffect {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.glassCard {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px 0 rgba(31, 38, 135, 0.2);
+}
+
+.glassButton {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.glassButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px 0 rgba(31, 38, 135, 0.4);
+}
+
+.sidebarCollapsed {
+  width: 56px;
+}
+
+.sidebarExpanded {
+  width: 240px;
+}
+
+.mainContentExpanded {
+  margin-left: 240px;
+}
+
+.mainContentCollapsed {
+  margin-left: 56px;
+}
+
+.hoverLift:hover {
+  transform: translateY(-4px);
+  transition: transform 0.3s ease;
+}
+
+.sidebarNavItemActive {
+  background: rgba(112, 83, 59, 0.8);
+  color: white;
+}
+
+.sidebarNavItemInactive:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(112, 83, 59, 0.8);
+}
+
