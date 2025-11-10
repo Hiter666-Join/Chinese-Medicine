@@ -1,5 +1,10 @@
 
+<<<<<<< HEAD
 
+=======
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
+>>>>>>> 570d511 (first commit)
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
@@ -24,6 +29,10 @@ interface TestResult {
 
 const PhysicalTestPage: React.FC = () => {
   const navigate = useNavigate();
+<<<<<<< HEAD
+=======
+  const { avatar } = useContext(UserContext);
+>>>>>>> 570d511 (first commit)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
