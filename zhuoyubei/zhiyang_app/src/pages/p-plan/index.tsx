@@ -1,4 +1,6 @@
 
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './styles.module.css';
@@ -13,6 +15,7 @@ interface PlanData {
 
 const PlanPage: React.FC = () => {
   const navigate = useNavigate();
+  const { avatar, setAvatar, nickname, setNickname } = useContext(UserContext);
   const [searchParams] = useSearchParams();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [globalSearchValue, setGlobalSearchValue] = useState('');
@@ -145,9 +148,9 @@ const PlanPage: React.FC = () => {
             {/* 用户头像 */}
             <div className="relative">
               <button className={`flex items-center space-x-2 p-2 ${styles.glassButton} rounded-lg`}>
-                <img src="https://s.coze.cn/image/gD0E1x7XUlU/" 
+                <img src= {avatar} 
                      alt="用户头像" className="w-8 h-8 rounded-full" />
-                <span className="hidden md:block text-sm text-text-primary">张先生</span>
+                <span className="hidden md:block text-sm text-text-primary">{nickname}</span>
                 <i className="fas fa-chevron-down text-xs text-text-secondary"></i>
               </button>
             </div>
@@ -538,8 +541,8 @@ const PlanPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
-                <p className="text-sm text-text-secondary">© 2024 滋智通. 保留所有权利.</p>
-                <p className="text-xs text-text-secondary mt-1">京ICP备12345678号-1</p>
+                <p className="text-sm text-text-secondary">© 2025 滋智通. 保留所有权利.</p>
+                <p className="text-xs text-text-secondary mt-1">粤ICP备12345678号-1</p>
               </div>
               <div className="flex space-x-6">
                 <a href="#" className="text-sm text-text-secondary hover:text-accent transition-colors">隐私政策</a>

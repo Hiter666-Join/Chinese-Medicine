@@ -1,12 +1,8 @@
 
-<<<<<<< HEAD
-
-=======
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
->>>>>>> 570d511 (first commit)
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 
 interface QuestionOption {
@@ -29,10 +25,7 @@ interface TestResult {
 
 const PhysicalTestPage: React.FC = () => {
   const navigate = useNavigate();
-<<<<<<< HEAD
-=======
-  const { avatar } = useContext(UserContext);
->>>>>>> 570d511 (first commit)
+  const { avatar, setAvatar, nickname, setNickname } = useContext(UserContext);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -343,11 +336,11 @@ const PhysicalTestPage: React.FC = () => {
             <div className="relative">
               <button className={`flex items-center space-x-2 p-2 ${styles.glassButton} rounded-lg`}>
                 <img 
-                  src="https://s.coze.cn/image/bYDLTbtt4lM/" 
+                  src= {avatar} 
                   alt="用户头像" 
                   className="w-8 h-8 rounded-full"
                 />
-                <span className="hidden md:block text-sm text-text-primary">张先生</span>
+                <span className="hidden md:block text-sm text-text-primary">{nickname}</span>
                 <i className="fas fa-chevron-down text-xs text-text-secondary"></i>
               </button>
             </div>

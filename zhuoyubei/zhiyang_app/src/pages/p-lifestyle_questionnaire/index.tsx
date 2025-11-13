@@ -1,7 +1,5 @@
-
-
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 
 // 问题选项类型
@@ -29,13 +27,14 @@ interface Question {
 
 const LifestyleQuestionnaire: React.FC = () => {
   const navigate = useNavigate();
+  const [submitMessage, setSubmitMessage] = useState<string>('');
   const [currentSection, setCurrentSection] = useState<number>(1);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
   const [answers, setAnswers] = useState<Answers>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSaving, setIsSaving] = useState<boolean>(false);
-
   const totalSections = 3;
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   // 页面标题
   useEffect(() => {
@@ -55,18 +54,15 @@ const LifestyleQuestionnaire: React.FC = () => {
     }
   }, []);
 
+  // 侧边栏折叠
   const handleSidebarToggle = () => setIsSidebarCollapsed(!isSidebarCollapsed);
 
+  // 搜索框按下回车
   const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const keyword = (e.target as HTMLInputElement).value.trim();
+      const keyword = searchKeyword.trim();
       if (keyword) navigate(`/search-result?q=${encodeURIComponent(keyword)}`);
     }
-  };
-
-  const handleNavigation = (path: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    if (confirm('问卷尚未完成，确定要离开吗？')) navigate(path);
   };
 
   // 单选
@@ -188,16 +184,7 @@ const LifestyleQuestionnaire: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    const allQuestions: Question[] = [
-      { id: '1', type: 'single', question: '' },
-      { id: '2', type: 'single', question: '' },
-      { id: '3', type: 'multiple', question: '' },
-      { id: '4', type: 'text', question: '' },
-      { id: '5', type: 'text', question: '' },
-      { id: '6', type: 'single', question: '' },
-      { id: '7', type: 'single', question: '' },
-      { id: '8', type: 'multiple', question: '' }
-    ];
+    const allQuestions = getCurrentSectionQuestions();
     const allAnswered = allQuestions.every(q => {
       const answer = answers[q.id as keyof Answers];
       if (q.type === 'text' || q.type === 'single') return answer !== undefined && answer !== '';
@@ -211,11 +198,13 @@ const LifestyleQuestionnaire: React.FC = () => {
     }
 
     setIsSubmitting(true);
+    setSubmitMessage('请稍等，您的体质测试报告正在路上…'); 
     setTimeout(() => {
       if (typeof window !== 'undefined') {
         localStorage.setItem('lifestyle_answers', JSON.stringify(answers));
         localStorage.removeItem('current_section');
       }
+      setSubmitMessage('');
       navigate('/ai-consult?lifestyle_submitted=true');
     }, 1500);
   };
@@ -278,17 +267,34 @@ const LifestyleQuestionnaire: React.FC = () => {
     );
   };
 
-  const progress = (currentSection / totalSections) * 100;
-
   return (
     <div className={styles.pageWrapper}>
-      {/* 这里省略导航栏和侧边栏 JSX，为重点演示 TS 类型安全 */}
-      <main className={`${isSidebarCollapsed ? styles.mainContentCollapsed : styles.mainContentExpanded} pt-16 min-h-screen transition-all duration-300`}>
+      {/* 顶部搜索栏 */}
+      <header className={`fixed top-0 left-0 right-0 h-16 ${styles.glassEffect} z-50 flex items-center px-6`}>
+        <input
+          type="text"
+          placeholder="搜索滋补品、方案..."
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          onKeyPress={handleSearchKeyPress}
+          className="w-64 px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-accent"
+        />
+      </header>
+
+      {/* 侧边栏
+      <aside className={`fixed left-0 top-16 bottom-0 ${isSidebarCollapsed ? styles.sidebarCollapsed : styles.sidebarExpanded} ${styles.glassEffect} z-40 transition-all duration-300`}>
+        <button onClick={handleSidebarToggle} className="w-full mb-6 p-2 text-center">
+          {isSidebarCollapsed ? '展开' : '折叠'}
+        </button>
+      </aside> */}
+
+      {/* 主内容 */}
+      <main className={`${isSidebarCollapsed ? styles.mainContentCollapsed : styles.mainContentExpanded} pt-20 min-h-screen transition-all duration-300`}>
         <div className="p-6">
           {getCurrentSectionQuestions().map(renderQuestion)}
           <div className="flex items-center justify-between mt-6">
             <button onClick={handlePrevious} disabled={currentSection === 1}>上一题</button>
-            <div>
+            <div className="space-x-2">
               <button onClick={handleSaveProgress}>{isSaving ? '已保存' : '保存进度'}</button>
               <button onClick={handleNext} disabled={!isCurrentSectionComplete() || isSubmitting}>
                 {currentSection === totalSections ? '提交问卷' : '下一题'}

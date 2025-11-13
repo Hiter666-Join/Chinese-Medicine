@@ -33,7 +33,7 @@ function Listener() {
   return <Outlet />;
 }
 
-// 使用 createBrowserRouter 创建路由实例
+// createBrowserRouter 创建路由
 const router = createBrowserRouter([
   {
     path: '/',
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Navigate to='/home' replace={true} />,
+        element: <Navigate to='/login-register' replace={true} />,
       },
       {
         path: '/home',

@@ -1,8 +1,9 @@
 
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
+import { UserContext } from '../../context/UserContext';
 
 interface ChatMessage {
   id: string;
@@ -19,6 +20,7 @@ interface RelatedLink {
 
 const AIConsultPage: React.FC = () => {
   const navigate = useNavigate();
+  const { avatar, setAvatar, nickname, setNickname } = useContext(UserContext);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [messageInputValue, setMessageInputValue] = useState('');
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
@@ -235,7 +237,7 @@ const AIConsultPage: React.FC = () => {
       return (
         <div key={message.id} className="flex items-start space-x-3">
           <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
-            <img src="https://s.coze.cn/image/XLrBCwKO_D4/" alt="用户头像" className="w-8 h-8 rounded-full" />
+            <img src= {avatar} alt="用户头像" className="w-8 h-8 rounded-full" />
           </div>
           <div className="flex-1">
             <div className={`${styles.chatBubbleUser} max-w-md p-4`}>
@@ -283,7 +285,7 @@ const AIConsultPage: React.FC = () => {
         {message.sender === 'user' ? (
           <>
             <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
-              <img src="https://s.coze.cn/image/NsgoJj9BGaU/" alt="用户头像" className="w-8 h-8 rounded-full" />
+              <img src= {avatar} alt="用户头像" className="w-8 h-8 rounded-full" />
             </div>
             <div className="flex-1">
               <div className={`${styles.chatBubbleUser} max-w-md p-4`}>
@@ -350,9 +352,9 @@ const AIConsultPage: React.FC = () => {
             {/* 用户头像 */}
             <div className="relative">
               <button className={`flex items-center space-x-2 p-2 ${styles.glassButton} rounded-lg`}>
-                <img src="https://s.coze.cn/image/SBx_bf9jRis/" 
+                <img src= {avatar} 
                      alt="用户头像" className="w-8 h-8 rounded-full" />
-                <span className="hidden md:block text-sm text-text-primary">张先生</span>
+                <span className="hidden md:block text-sm text-text-primary">{nickname}</span>
                 <i className="fas fa-chevron-down text-xs text-text-secondary"></i>
               </button>
             </div>

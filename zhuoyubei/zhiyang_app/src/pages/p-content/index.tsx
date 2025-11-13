@@ -1,4 +1,7 @@
 
+
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
@@ -23,6 +26,7 @@ type ContentType = 'article' | 'video' | 'qa' | 'topic';
 
 const ContentPage: React.FC = () => {
   const navigate = useNavigate();
+  const { avatar } = useContext(UserContext);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('articles');
   const [showContentDetail, setShowContentDetail] = useState(false);
@@ -394,7 +398,7 @@ const ContentPage: React.FC = () => {
             
             <div className={`${styles.videoContainer} mb-6`}>
               <iframe 
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                src="https://www.bilibili.com/video/BV1cK4y1s7hK/?spm_id_from=333.1007.top_right_bar_window_history.content.click" 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen
@@ -548,7 +552,7 @@ const ContentPage: React.FC = () => {
             <div className="relative">
               <button className={`flex items-center space-x-2 p-2 ${styles.glassButton} rounded-lg`}>
                 <img 
-                  src="https://s.coze.cn/image/1Q2pSiCCiOQ/" 
+                  src= {avatar} 
                   alt="用户头像" 
                   className="w-8 h-8 rounded-full"
                 />
@@ -683,8 +687,8 @@ const ContentPage: React.FC = () => {
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-4 md:mb-0">
-                <p className="text-sm text-text-secondary">© 2024 滋智通. 保留所有权利.</p>
-                <p className="text-xs text-text-secondary mt-1">京ICP备12345678号-1</p>
+                <p className="text-sm text-text-secondary">© 2025 滋智通. 保留所有权利.</p>
+                <p className="text-xs text-text-secondary mt-1">粤ICP备12345678号-1</p>
               </div>
               <div className="flex space-x-6">
                 <a href="#" className="text-sm text-text-secondary hover:text-accent transition-colors">隐私政策</a>
